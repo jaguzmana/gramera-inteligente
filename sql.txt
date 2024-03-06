@@ -1,0 +1,114 @@
+create schema pesoPlumaDb;
+
+use pesoPlumaDb;
+
+CREATE TABLE Ingredient (
+    ingredient_id INT AUTO_INCREMENT PRIMARY KEY,
+    ingredient_name VARCHAR(255) NOT NULL,
+    ingredient_amount FLOAT(7,7),
+    ingredient_unit VARCHAR(15) NOT NULL,
+    ingredient_density FLOAT NOT NULL CHECK (ingredient_density >= 1e-6 AND ingredient_density <= 1e3)
+);
+
+CREATE TABLE Consume (
+    consume_id INT AUTO_INCREMENT PRIMARY KEY,
+    consume_date DATETIME NOT NULL,
+    consume_amount FLOAT NOT NULL CHECK (consume_amount >= 1e-6 AND consume_amount <= 1e6),
+    ingredient_id INT,
+    FOREIGN KEY (ingredient_id) REFERENCES Ingredient(ingredient_id)
+);
+
+CREATE TABLE Recipe (
+    recipe_id INT AUTO_INCREMENT PRIMARY KEY,
+    recipe_name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Amount (
+    amount_id INT AUTO_INCREMENT PRIMARY KEY,
+    amount_amount FLOAT NOT NULL CHECK (amount_amount >= 1e-6 AND amount_amount <= 1e6),
+    amount_unit VARCHAR(15) NOT NULL,
+    amount_description VARCHAR(255),
+    ingredient_id INT,
+    recipe_id INT,
+    FOREIGN KEY (ingredient_id) REFERENCES Ingredient(ingredient_id),
+    FOREIGN KEY (recipe_id) REFERENCES Recipe(recipe_id)
+);
+
+INSERT INTO Ingredient (ingredient_name, ingredient_amount, ingredient_unit, ingredient_density) 
+VALUES 
+('Harina de trigo', 0, 'gramos', 0.59),
+('Sal', 0, 'gramos', 2.17),
+('Pimienta', 0, 'gramos', 0.55),
+('Azucar', 0, 'gramos', 0.8),
+('Azucar granulada', 0, 'gramos', 0.8),
+('Levadura seca activa', 0, 'gramos', 0.59),
+('Aceite de oliva', 0, 'mililitros', 0.92),
+('Vinagre', 0, 'mililitros', 1.01),
+('Agua', 0, 'mililitros', 1),
+('Mantequilla', 0, 'gramos', 0.911),
+('Leche', 0, 'mililitros', 1.03),
+('Huevos', 0, 'unidades', 1.03),
+('Yema', 0, 'unidades', 1.03),
+('Clara', 0, 'unidades', 1.03),
+('Ajo en polvo', 0, 'gramos', 1.04),
+('Dientes de ajo', 0, 'unidades', 1.04),
+('Arroz', 0, 'gramos', 0.96),
+('Tomillo en polvo', 0, 'gramos', 0.91),
+('Extracto de vainilla', 0, 'mililitros', 1.056), 
+('Jugo de limon', 0, 'mililitros', 1.03);
+
+INSERT INTO Recipe (recipe_name) 
+VALUES 
+('Pan Casero de Ajo y Hierbas'),
+('Crepes Dulces con Salsa de Azúcar y Limón');	
+
+INSERT INTO Amount (amount_amount, amount_unit, amount_description, ingredient_id, recipe_id) VALUES
+(500, 'gramos', NULL, 1, 1),
+(10, 'gramos', NULL, 6, 1), 
+(300, 'mililitros', 'La agua tiene que estar tibia', 9, 1), 
+(2, 'cucharadas', NULL, 7, 1), 
+(2, 'unidades', 'Los dientes de ajo deben estar picados finamente', 16, 1), 
+(1, 'cucharaditas', NULL, 2, 1), 
+(1, 'cucharadas', NULL, 18, 1);
+
+INSERT INTO Amount (amount_amount, amount_unit, amount_description, ingredient_id, recipe_id) VALUES
+(1, 'tazas', NULL, 1, 2),
+(2, 'unidades', 'Procure que los huevos sean grandes', 12, 2), 
+(1, 'tazas', NULL, 11, 2), 
+(2, 'cucharadas', 'la matequilla tiene que estar derretida', 10, 2), 
+(1, 'cucharaditas', NULL, 19, 2), 
+(1, 'pizcas', NULL, 2, 2),
+(1, 'tazas', NULL, 5, 2), 
+(1, 'medias tazas', NULL, 9, 2), 
+(0.25, 'tazas', NULL, 20, 2); 
+
+
+//////////////////////
+
+select * from Ingredient;
+select * from Amount;
+select * from Recipe;
+
+SELECT Amount.amount_id, 
+       Amount.amount_amount, 
+       Amount.amount_unit,
+       Amount.amount_description, 
+       Ingredient.ingredient_name, 
+       Recipe.recipe_name
+FROM Amount
+JOIN Ingredient ON Amount.ingredient_id = Ingredient.ingredient_id
+JOIN Recipe ON Amount.recipe_id = Recipe.recipe_id
+WHERE Recipe.recipe_name = 'Pan Casero de Ajo y Hierbas';
+
+SELECT Amount.amount_id, 
+       Amount.amount_amount, 
+       Amount.amount_unit,
+       Amount.amount_description, 
+       Ingredient.ingredient_name, 
+       Recipe.recipe_name
+FROM Amount
+JOIN Ingredient ON Amount.ingredient_id = Ingredient.ingredient_id
+JOIN Recipe ON Amount.recipe_id = Recipe.recipe_id
+WHERE Recipe.recipe_name = 'Crepes Dulces con Salsa de Azúcar y Limón';
+
+DELETE FROM Ingredient WHERE ingredient_id = 1;
