@@ -7,11 +7,14 @@
         $con = new mysqli($host, $user, $password, $db);
         $sql = "DELETE FROM Ingredient WHERE ingredient_id = " . $_GET["id"];
 
-        if($query != null){
+        try {
+            $query = $con->query($sql);
             print "<script>alert('eliminado Exitosamente');window.location = 'index.php';</script>";
-        }else{
-            print "<script>alert('no se pudo mi perro');window.location = 'index.php';</script>";
+        } catch (Exception $e){
+            $error = mysqli_error($con);
+            print "<script>alert('Error al eliminar: $error');window.location = 'index.php';</script>";
         }
+
     }
 
 ?>
