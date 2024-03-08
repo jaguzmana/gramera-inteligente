@@ -9,7 +9,7 @@
 
         try {
             $query = $con->query($sql);
-            print "<script>alert('eliminado Exitosamente');window.location = 'index.php';</script>";
+            print "<script>alert('Eliminado Exitosamente');window.location = 'index.php';</script>";
         } catch (Exception $e){
             $error = mysqli_error($con);
             print "<script>alert('Error al eliminar: $error');window.location = 'index.php';</script>";

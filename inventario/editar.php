@@ -6,8 +6,7 @@
                 $password = "samc2003";
                 $db = "pesoPlumaDb";
                 $con = new mysqli($host, $user, $password, $db);
-                //$sql= "select * from estudiantes";
-                //$query = $con->query($sql);
+                
                 $idingrediente = $_POST["id-ingrediente"];
                 $nombreingrediente = $_POST["nombre-ingrediente"];
                 $cantidadingrediente = $_POST["cantidad-ingrediente"];
@@ -20,8 +19,7 @@
                     print "<script>alert(\"Editado exitosamente.\");window.location='index.php';</script>";
                 } catch (Exception $e){
                     $error = mysqli_error($con);
-                    print "<script>alert(\"No se pudo Editar.\");window.location='index.php';</script>";
-                }
+                    print "<script>alert('Error al editar: $error');window.location = 'index.php';</script>";                }
         
         }
     }

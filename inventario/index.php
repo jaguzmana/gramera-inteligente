@@ -14,6 +14,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>php</title>
+    <!--  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.bootstrap5.css">
+    <script defer src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script defer src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
+    <script defer src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
+    <script defer src="./index.js"></script>
+    <!--  -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <style>
         *{
@@ -25,14 +34,38 @@
             display: flex;
             justify-content: center;
             margin-top: 5vh;
+        }.contenedor2{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
     
     </style>
 </head>
 <body>
-    <div class="contenedor">
+    <br>
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link" href="./../pesoEnVivo/index.php">Medicion en vivo</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="./../receta/index.php">Recetas</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="./../intex.php">Inicio</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="./../inventario/index.php">Inventario</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="./../consumo/index.php" aria-current="page">Informe de consumo</a>
+        </li>
+    </ul>
+    <hr>
+    <div class="contenedor2">
+        <h2>Inventario</h2>
         <div class="row">
-            <table class="table table-bordered">
+            <table id="tablaInventario" class="table table-bordered">
                 <thead>
                   <tr>
                     <th scope="col">Id</th>
@@ -75,6 +108,47 @@
               </table>
         </div>
     </div>
-    <hr>
+    <div class="contenedor2">
+        <h2 style="align-self: baseline;margin: 25px 140px;">Agregar</h2>
+        <form class="container" action="agregar.php" method="post">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="nombre-ingrediente" name="nombre-ingrediente" placeholder="">
+            <label for="nombre-ingrediente">Nombre del ingrediente</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="number" class="form-control" id="cantidad-ingrediente" name="cantidad-ingrediente" placeholder="">
+            <label for="cantidad-ingrediente">Cantidad del ingrediente</label>
+        </div>
+        <div class="form-floating">
+            <select class="form-select" id="unidad-ingrediente" name="unidad-ingrediente" aria-label="Floating label select example">
+                <option value="gramos">gramos</option>
+                <option value="kilogramos">kilogramos</option>
+                <option value="mililitros">mililitros</option>
+                <option value="litros">litros</option>
+                <option value="unidades">unidades</option>
+                <option value="libras">libras</option>
+                <option value="onzas">onzas</option>
+                <option value="tazas">tazas</option>
+                <option value="medias tazas">medias tazas</option>
+                <option value="cucharadas">cucharadas</option>
+                <option value="cucharaditas">cucharaditas</option>
+                <option value="pizcas">pizcas</option>
+            </select>
+            <label for="unidad-ingrediente">Unidad</label>
+        </div>
+        <br>
+        <div class="form-floating mb-3">
+            <input type="number" class="form-control" id="densidad-ingrediente" name="densidad-ingrediente" placeholder="">
+            <label for="densidad-ingrediente">Densidad del ingrediente</label>
+        </div>
+        <button type="submit" class="btn btn-success">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"/>
+            </svg>
+            Agregar
+        </button>
+        </form>    
+    </div>
+    <br>
 </body>
 </html>

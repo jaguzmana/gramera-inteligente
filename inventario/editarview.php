@@ -39,8 +39,27 @@
     <title>Editar Ingrediente</title>
 </head>
 <body>
+    <br>
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link" href="./../pesoEnVivo/index.php">Medicion en vivo</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="./../receta/index.php">Recetas</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="./../intex.php">Inicio</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="./../inventario/index.php">Inventario</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="./../consumo/index.php" aria-current="page">Informe de consumo</a>
+        </li>
+    </ul>
+    <hr>
     <div class="contenedor">
-        <h1>Editar</h1>
+        <h2>Editar</h2>
         <form class="container" action="editar.php" method="post">
         <div style="display: none">
             <input type="text" id="id-ingrediente" name="id-ingrediente" placeholder="" value="<?php echo $r["ingredient_id"];?>">
@@ -51,8 +70,8 @@
             <label for="nombre-ingrediente">Nombre del ingrediente</label>
         </div>
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="cantidad-ingrediente" name="cantidad-ingrediente" placeholder="" value="<?php echo $r["ingredient_amount"];?>">
-            <label for="cantidad-ingrediente">Nombre del ingrediente</label>
+            <input type="number" class="form-control" id="cantidad-ingrediente" name="cantidad-ingrediente" placeholder="" value="<?php echo $r["ingredient_amount"];?>">
+            <label for="cantidad-ingrediente">Cantidad del ingrediente</label>
         </div>
         <div class="form-floating">
             <select class="form-select" id="unidad-ingrediente" name="unidad-ingrediente" aria-label="Floating label select example">
@@ -70,7 +89,7 @@
                 <option value="cucharaditas">cucharaditas</option>
                 <option value="pizcas">pizcas</option>
             </select>
-            <label for="unidad-ingrediente">Works with selects</label>
+            <label for="unidad-ingrediente">Unidad</label>
         </div>
         <br>
         <div class="form-floating mb-3">
@@ -91,5 +110,6 @@
         </a>
         </form>    
     </div> 
+    <br>
 </body>
 </html>

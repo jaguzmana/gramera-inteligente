@@ -2,18 +2,22 @@ create schema pesoPlumaDb;
 
 use pesoPlumaDb;
 
+--------------------------------------------------------
+
 CREATE TABLE Ingredient (
     ingredient_id INT AUTO_INCREMENT PRIMARY KEY,
     ingredient_name VARCHAR(255) NOT NULL,
-    ingredient_amount FLOAT(7,7),
+    ingredient_amount FLOAT,
     ingredient_unit VARCHAR(15) NOT NULL,
-    ingredient_density FLOAT NOT NULL CHECK (ingredient_density >= 1e-6 AND ingredient_density <= 1e3)
+    ingredient_density FLOAT NOT NULL
 );
 
 CREATE TABLE Consume (
     consume_id INT AUTO_INCREMENT PRIMARY KEY,
     consume_date DATETIME NOT NULL,
-    consume_amount FLOAT NOT NULL CHECK (consume_amount >= 1e-6 AND consume_amount <= 1e6),
+    consume_amount FLOAT,
+    consume_unit VARCHAR(15) NOT NULL,
+	consume_description VARCHAR(255),
     ingredient_id INT,
     FOREIGN KEY (ingredient_id) REFERENCES Ingredient(ingredient_id)
 );
@@ -25,7 +29,7 @@ CREATE TABLE Recipe (
 
 CREATE TABLE Amount (
     amount_id INT AUTO_INCREMENT PRIMARY KEY,
-    amount_amount FLOAT NOT NULL CHECK (amount_amount >= 1e-6 AND amount_amount <= 1e6),
+    amount_amount FLOAT,
     amount_unit VARCHAR(15) NOT NULL,
     amount_description VARCHAR(255),
     ingredient_id INT,
@@ -33,6 +37,8 @@ CREATE TABLE Amount (
     FOREIGN KEY (ingredient_id) REFERENCES Ingredient(ingredient_id),
     FOREIGN KEY (recipe_id) REFERENCES Recipe(recipe_id)
 );
+
+-----------------------------------------------------------------------------
 
 INSERT INTO Ingredient (ingredient_name, ingredient_amount, ingredient_unit, ingredient_density) 
 VALUES 
@@ -55,7 +61,11 @@ VALUES
 ('Arroz', 0, 'gramos', 0.96),
 ('Tomillo en polvo', 0, 'gramos', 0.91),
 ('Extracto de vainilla', 0, 'mililitros', 1.056), 
-('Jugo de limon', 0, 'mililitros', 1.03);
+('Jugo de limon', 0, 'mililitros', 1.03),
+('temporal1', 11110, 'kilogramos', 1.04),
+('temporal2', 0.35, 'onzas', 0.96),
+('temporal3', 1234, 'libras', 0.91),
+('temporal4', 23.16121, 'pizcas', 1.056);
 
 INSERT INTO Recipe (recipe_name) 
 VALUES 
@@ -82,8 +92,42 @@ INSERT INTO Amount (amount_amount, amount_unit, amount_description, ingredient_i
 (1, 'medias tazas', NULL, 9, 2), 
 (0.25, 'tazas', NULL, 20, 2); 
 
+INSERT INTO Consume (consume_date, consume_amount, consume_unit, ingredient_id) VALUES
+('2024-03-01 08:00:00', 500, 'gramos', 21), 
+('2024-03-01 08:00:00', 1, 'gramos', 22),
+('2024-03-01 08:00:00', 500, 'gramos', 23),
+('2024-03-01 08:00:00', 500, 'gramos', 24),
+('2024-03-01 08:00:00', 500, 'gramos', 21); 
 
-//////////////////////
+--------------------------------------------------------------------------
+
+select * from Ingredient;
+select * from Amount;
+select * from Recipe;
+
+SELECT Amount.amount_id, 
+       Amount.amount_amount, 
+       Amount.amount_unit,
+       Amount.amount_description, 
+       Ingredient.ingredient_name, 
+       Recipe.recipe_name
+FROM Amount
+JOIN Ingredient ON Amount.ingredient_id = Ingredient.ingredient_id
+JOIN Recipe ON Amount.recipe_id = Recipe.recipe_id
+WHERE Recipe.recipe_name = 'Pan Casero de Ajo y Hierbas';
+
+SELECT Amount.amount_id, 
+       Amount.amount_amount, 
+       Amount.amount_unit,
+       Amount.amount_description, 
+       Ingredient.ingredient_name, 
+       Recipe.recipe_name
+FROM Amount
+JOIN Ingredient ON Amount.ingredient_id = Ingredient.ingredient_id
+JOIN Recipe ON Amount.recipe_id = Recipe.recipe_id
+WHERE Recipe.recipe_name = 'Crepes Dulces con Salsa de Azúcar y Limón'
+
+---------------------------------------------------
 
 select * from Ingredient;
 select * from Amount;
