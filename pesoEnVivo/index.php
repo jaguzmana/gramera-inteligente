@@ -1,17 +1,14 @@
 <?php
-// Nombre del archivo donde se guardará el último valor
-$archivo = 'ultimo_valor.txt';
+include 'connect_to_db.php';
+include 'functions.php';
 
-// Variable global para almacenar el último valor
-global $dato;
+$conn = conectarDB();
 
-// Verifica si se ha enviado un dato a través del formulario POST
-if (isset($_POST["dato"])) {
-    $dato = $_POST["dato"];
-    
-    // Guarda el último valor en el archivo
-    file_put_contents($archivo, $dato);
+if (isset($conn)) {
+    echo "DB funciona";
 }
+
+manejarUltimoValor();
 ?>
 
 <!DOCTYPE html>
@@ -22,12 +19,52 @@ if (isset($_POST["dato"])) {
     <title>Medición en vivo</title>
 </head>
 <body>
-    <h1>Medición en Vivo</h1>
-    <div id="ultimo_valor_section">
-        <h2>Último Valor Leído:</h2>
-        <span id="ultimo_valor"><?php echo $ultimo_valor; ?></span> gr
-    </div>
-
     <script src="index.js"></script>
+    
+    <div class=page>
+    <header>
+        <div class="header-container">
+            <h1>PesoPluma</h1>
+            <nav>
+                <ul>
+                    <li><a href="">Inicio</a></li>
+                    <li><a href="">Inventario</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <article>
+        <h2>Medición en Vivo</h2>
+        <section>
+            <h3>Lectura actual:</h3>
+            <p><span id="ultimo_valor"><?php echo $ultimo_valor; ?></span></p>
+        </section>
+
+        <section>
+            <h3>Convertir de:</h3>
+                <form action="" method="post">
+                    <label for="unidad-gastronomica-1">Unidad Gastronomica</label>
+                    <select name="" id="">
+                        <option value=""></option>
+                    </select>
+
+                    <label for="unidad-gastronomica-2"></label>
+                </form>
+
+                <h3>A:</h3>
+                <form action="" method="post">
+                    <label for="unidad-gastronomica-1">Unidad Gastronomica</label>
+                    <select name="" id="">
+                        <option value=""></option>
+                    </select>
+
+                    <label for="unidad-gastronomica-2"></label>
+                </form>
+
+                <button type="submit">Confirmar</button>
+        </section>
+    </article>
+    </div>
 </body>
 </html>
