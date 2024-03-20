@@ -12,7 +12,7 @@
             $r=$query->fetch_array();
         } catch (Exception $e){
             $error = mysqli_error($con);
-            print "<script>alert('Error al eliminar: $error');window.location = 'index.php';</script>";
+            print "<script>alert('Error al editar: $error');window.location = 'index.php';</script>";
         }
     }
 ?>
@@ -48,7 +48,7 @@
             <a class="nav-link" href="./../receta/index.php">Recetas</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="./../intex.php">Inicio</a>
+            <a class="nav-link" href="./../index.php">Inicio</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="./../inventario/index.php">Inventario</a>
@@ -70,7 +70,7 @@
             <label for="nombre-ingrediente">Nombre del ingrediente</label>
         </div>
         <div class="form-floating mb-3">
-            <input type="number" class="form-control" id="cantidad-ingrediente" name="cantidad-ingrediente" placeholder="" value="<?php echo $r["ingredient_amount"];?>">
+            <input type="number" step="any" class="form-control" id="cantidad-ingrediente" name="cantidad-ingrediente" placeholder="" value="<?php echo $r["ingredient_amount"];?>">
             <label for="cantidad-ingrediente">Cantidad del ingrediente</label>
         </div>
         <div class="form-floating">
@@ -93,7 +93,7 @@
         </div>
         <br>
         <div class="form-floating mb-3">
-            <input type="number" class="form-control" id="densidad-ingrediente" name="densidad-ingrediente" placeholder="" value="<?php echo $r["ingredient_density"];?>">
+            <input type="number" step="any" class="form-control" id="densidad-ingrediente" name="densidad-ingrediente" placeholder="" value="<?php echo $r["ingredient_density"];?>">
             <label for="densidad-ingrediente">Densidad del ingrediente</label>
         </div>
         <button type="submit" class="btn btn-success">

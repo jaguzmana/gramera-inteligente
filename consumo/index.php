@@ -66,7 +66,7 @@
             <a class="nav-link" href="./../receta/index.php">Recetas</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="./../intex.php">Inicio</a>
+            <a class="nav-link" href="./../index.php">Inicio</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="./../inventario/index.php">Inventario</a>
@@ -122,5 +122,6 @@
         </button>
         </form>    
     </div>
+    <br>
 </body>
 </html>
