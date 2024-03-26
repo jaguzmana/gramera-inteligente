@@ -118,7 +118,7 @@ recibirLecturaSensor();
                 <option value="pizcas">Pizcas</option>
                 </select>
                 <button onclick="confirmarPeso()" id="confirmar" class="bg-blue-700 text-white py-1 px-3 rounded hover:bg-blue-transition-colors block mt-6 shadow" disabled="disabled" type="submit">
-                    Confirmar Consumo
+                    Registrar Consumo
                 </button>
             </form>
         </section>

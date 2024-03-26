@@ -35,6 +35,7 @@ async function agregarConsumo(datetime, amount, unit, ingredient_id) {
     try {
         const response = await fetch(`../API/api.php?action=agregarConsumo&datetime="${datetime}"&amount=${amount}&unit="${unit}"&ingredient_id=${ingredient_id}`);
         const data = response;
+        alert("Consumo registrado exitosamente");
         console.log(data)
     } catch (error) {
         console.error('Error:', error);
