@@ -3,8 +3,8 @@ include_once '../API/ingredientAPI.php';
 include_once 'functions.php';
 
 $ingredient = new IngredientAPI();
-$res = $ingredient->obtenerIngredientes();
 
+$res = $ingredient->obtenerIngredientes();
 recibirLecturaSensor();
 ?>
 
@@ -34,22 +34,34 @@ recibirLecturaSensor();
         </div>
     </header>
 
-    <main class="p-12">
-        <article class="flex flex items-center flex-row justify-beetween h-[400px]">
+    <main>
+        <article class="flex flex items-center flex-row justify-beetween h-[400px] p-4">
 
-        <div class="basis-1/4 flex flex-col justify-start h-full items-center">
-            <h2 class="text-md font-bold m-4">
+        <div class="basis-1/4 flex flex-col justify-start h-full items-center border mr-4 rounded shadow">
+
+            <h2 class="text-md font-bold mb-4 mt-4">
                 Medición en Vivo
             </h2>
 
             <section>
-                <h3>Lectura actual:</h3>
-                <p> <span id="dato_procesado"></span> </p>
+                <h3 class="text-center">Lectura deseada:</h3>
+                <p class="text-center"> <span id="lectura_deseada">0</span> </p>
+            </section>
+
+            <section class="pt-4">
+                <h3 class="text-center">Lectura actual:</h3>
+                <p class="text-center"> <span id="dato_procesado">0</span> </p>
+            </section>
+
+            <section class="pt-4">
+                <h3 class="text-center text-md font-bold">Acción Requerida:</h3>
+                <p class="text-center"> <span id="accion_requerida"></span> </p>
             </section>
         </div>
 
         <section class="flex-auto h-full">
             <form action="index.php" method="post">
+
                 <h3 class="text-lg border-b text-blue-700 border-blue-700 mb-3 font-bold">
                     Ingrediente:
                 </h3>
@@ -66,7 +78,7 @@ recibirLecturaSensor();
                     Convertir de:
                 </h3>
 
-                <select name="unidad-gastronomica-1" id="unidad-gastronomica-1" class="border border-gray-300 rounded">
+                <select name="unidad-gastronomica-1" id="unidad-gastronomica-1" class="border border-gray-300 rounded mb-3">
                 <option value="none" selected disabled>Selecciona una opción</option>
                 <option value="gramos">Gramos</option>
                 <option value="kilogramos">Kilogramos</option>
@@ -81,6 +93,11 @@ recibirLecturaSensor();
                 <option value="cucharaditas">Cucharaditas</option>
                 <option value="pizcas">Pizcas</option>
                 </select>
+
+                <h3 class="text-lg border-b text-blue-700 border-blue-700 mb-3 font-bold">
+                    Cantidad deseada:
+                </h3>
+                <input value="0" min="0" class="border border-gray-300 rounded pl-1" type="number" name="" id="cantidad">
 
                 <h3 class="text-lg border-b text-blue-700 border-blue-700 mb-3 pt-2 font-bold">
                     Convertir a:
@@ -100,8 +117,8 @@ recibirLecturaSensor();
                 <option value="cucharaditas">Cucharaditas</option>
                 <option value="pizcas">Pizcas</option>
                 </select>
-                <button class="bg-blue-700 text-white py-1 px-3 rounded hover:bg-indigo-transition-colors block mt-3 shadow-md" type="submit">
-                    Confirmar
+                <button onclick="confirmarPeso()" id="confirmar" class="bg-blue-700 text-white py-1 px-3 rounded hover:bg-blue-transition-colors block mt-6 shadow" disabled="disabled" type="submit">
+                    Confirmar Consumo
                 </button>
             </form>
         </section>
