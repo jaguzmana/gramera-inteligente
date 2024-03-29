@@ -1,11 +1,8 @@
 <?php
 include_once '../API/ingredientAPI.php';
-include_once 'functions.php';
 
 $ingredient = new IngredientAPI();
-
 $res = $ingredient->obtenerIngredientes();
-recibirLecturaSensor();
 ?>
 
 <!DOCTYPE html>

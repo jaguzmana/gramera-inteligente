@@ -22,7 +22,7 @@ async function obtenerIngredientePorIDJSON(id) {
 
 async function obtenerDatoSensor() {
     try {
-        const response = await fetch('lectura_sensor.txt');
+        const response = await fetch('../API/lectura_sensor.txt');
         const data = await response.text();
         return data;
     } catch (error) {
@@ -45,47 +45,104 @@ async function agregarConsumo(datetime, amount, unit, ingredient_id) {
 
 async function conversionUnidades(lecturaActual, ingrediente, unidades1, unidades2) {
     let resultado = 0;
-    if (unidades1 == "gramos") {
-        switch (unidades2) {
-            case "gramos":
-                resultado = lecturaActual;   
-                break;
-            case "kilogramos":
-                resultado = lecturaActual / 1000;    
-                break;
-            case "mililitro":
-                resultado = lecturaActual / ingrediente;['density'];        
-                break;
-            case "litros":
-                resultado = lecturaActual / (1000 * ingrediente['density']);            
-                break;
-            case "unidades":
-                resultado = lecturaActual;       
-                break;
-            case "libras":
-                resultado = lecturaActual / 453.592;
-                break;
-            case "onzas":
-                resultado = lecturaActual / 28.35;      
-                break;
-            case "tazas":
-                resultado = lecturaActual / (ingrediente["density"] * 240);          
-                break;
-            case "medias tazas":
-                resultado = lecturaActual / (ingrediente["density"] * 120);         
-                break;
-            case "cucharadas": 
-                resultado = lecturaActual / (ingrediente["density"] * 15);        
-                break;
-            case "cucharaditas":
-                resultado = lecturaActual / (ingrediente["density"] * 5);       
-                break;
-            case "pizcas":
-                resultado = lecturaActual / 0.18;     
-                break;
-            default:
-                break;
-        }
+
+    switch (unidades1) {
+        case "gramos":
+            switch (unidades2) {
+                case "gramos":
+                    resultado = lecturaActual;   
+                    break;
+                case "kilogramos":
+                    resultado = lecturaActual / 1000;    
+                    break;
+                case "mililitros":
+                    resultado = lecturaActual / ingrediente;['density'];        
+                    break;
+                case "litros":
+                    resultado = lecturaActual / (1000 * ingrediente['density']);            
+                    break;
+                case "unidades":
+                    resultado = lecturaActual;       
+                    break;
+                case "libras":
+                    resultado = lecturaActual / 453.592;
+                    break;
+                case "onzas":
+                    resultado = lecturaActual / 28.35;      
+                    break;
+                case "tazas":
+                    resultado = lecturaActual / (ingrediente["density"] * 240);          
+                    break;
+                case "medias tazas":
+                    resultado = lecturaActual / (ingrediente["density"] * 120);         
+                    break;
+                case "cucharadas": 
+                    resultado = lecturaActual / (ingrediente["density"] * 15);        
+                    break;
+                case "cucharaditas":
+                    resultado = lecturaActual / (ingrediente["density"] * 5);       
+                    break;
+                case "pizcas":
+                    resultado = lecturaActual / 0.18;     
+                    break;
+                default:
+                    break;
+            }    
+            break;
+        case "kilogramos":
+            if (unidades2 == "gramos") {
+                resultado = lecturaActual * 1000;
+            }
+            break;
+        case "mililitros":   
+            if (unidades2 == "gramos") {
+                resultado = lecturaActual * ingrediente["density"];
+            }
+            break;
+        case "litros":
+            if (unidades2 == "gramos") {
+                resultado = lecturaActual * (1000 * ingrediente["density"]);
+            }
+            break;
+        case "unidades":
+            break;
+        case "libras":
+            if (unidades2 == "gramos") {
+                resultado = lecturaActual * 453.592;
+            }
+            break;
+        case "onzas":
+            if (unidades2 == "gramos") {
+                resultado = lecturaActual * 28.35;
+            }
+            break;
+        case "tazas":
+            if (unidades2 == "gramos") {
+                resultado = lecturaActual * ingrediente["density"] * 240;
+            }
+            break;
+        case "medias tazas":
+            if (unidades2 == "gramos") {
+                resultado = lecturaActual * ingrediente["density"] * 120;
+            }
+            break;
+        case "cucharadas":
+            if (unidades2 == "gramos") {
+                resultado = lecturaActual * ingrediente["density"] * 15;
+            }
+            break;
+        case "cucharaditas":
+            if (unidades2 == "gramos") {
+                resultado = lecturaActual * ingrediente["density"] * 5;
+            }
+            break;
+        case "piscaz":
+            if (unidades2 == "gramos") {
+                resultado = lecturaActual * 0.18;
+            }
+            break;
+        default:
+            break;
     }
 
     return parseFloat(resultado).toFixed(3);

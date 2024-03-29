@@ -8,4 +8,6 @@ function recibirLecturaSensor() {
         file_put_contents($archivo, $dato);
     }
 }
+
+recibirLecturaSensor();
 ?>
