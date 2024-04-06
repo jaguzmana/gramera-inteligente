@@ -4,7 +4,11 @@ include_once '../API/recipe.php';
 $recipe = new Recipe();
 $res = $recipe->obtenerRecetas();
 
-// TODO: Si no hay suficiente de algun ingrediente al medir, no se puede realizar la receta.
+/* 
+    TODO: 
+    - Si no hay suficiente de algun ingrediente al medir, no se puede realizar la receta.
+    - Solo se pueden eliminar recetas sin pasos.
+*/
 ?>
 
 <!DOCTYPE html>
@@ -26,9 +30,9 @@ $res = $recipe->obtenerRecetas();
             <nav class="flex-auto">
                 <ul class="flex justify-around">
                     <li><a class="text-white text-md" href="../index.php">Inicio</a></li>
-                    <li><a class="text-white text-md" href="">Receta</a></li>
-                    <li><a class="text-white text-md" href="">Inventario</a></li>
-                    <li><a class="text-white text-md" href="">Informe de Consumo</a></li>
+                    <li><a class="text-white text-md" href="../pesoEnVivo/index.php">Medición en Vivo</a></li>
+                    <li><a class="text-white text-md" href="../inventario/index.php">Inventario</a></li>
+                    <li><a class="text-white text-md" href="../consumo/index.php">Informe de Consumo</a></li>
                 </ul>
             </nav>
         </div>
@@ -94,13 +98,11 @@ $res = $recipe->obtenerRecetas();
                         }
                     ?>
                 </select>
-                <a href="administrar.php">
-                    <span id="administrar-recetas" class="block bg-blue-700 text-white py-1 px-3 rounded hover:bg-blue-transition-colors block mb-3 shadow w-44 text-center">
-                        Administrar Recetas
-                    </span>
-                </a>
-
-                <button onclick="siguientePaso()" id="confirmar" class="bg-blue-700 text-white py-1 px-3 rounded hover:bg-blue-transition-colors block mt-3 shadow" disabled="disabled" type="button">
+                <a id="administrar-recetas" href="http://localhost/gramera-inteligente/receta/administrar.php" class="block bg-blue-700 text-white py-1 px-3 rounded hover:bg-blue-transition-colors block mb-3 shadow w-44 text-center">
+                    Administrar Recetas
+                </a>   
+                
+                <button onclick="siguientePaso()" id="confirmar" class="bg-gray-500 text-white py-1 px-3 rounded hover:bg-blue-transition-colors block mt-3 shadow" disabled="disabled" type="button">
                     Registrar Consumo
                 </button>
 

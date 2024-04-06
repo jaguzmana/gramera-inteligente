@@ -8,8 +8,8 @@ async function main() {
         const botonConfirmar = document.getElementById("confirmar");
         const conteoPaso = document.getElementById("paso-receta");
         
-        botonConfirmar.classList.remove('bg-blue-700');
-        botonConfirmar.classList.add('bg-gray-500');
+        // botonConfirmar.classList.remove('bg-blue-700');
+        // botonConfirmar.classList.add('bg-gray-500');
 
         if (selectReceta.value != 'none') {
             selectReceta.disabled = true;
@@ -84,14 +84,15 @@ async function main() {
 }
 
 function siguientePaso() {
-    if (pasoActual <= tamanoPasos) {
+    if (pasoActual < tamanoPasos - 1) {
         pasoActual++;
         confirmarPeso();
     } else {
+        confirmarPeso(); // ultimo ingrediente
         alert("Receta finalizada!")
         pasoActual = 0;
         location.reload();
     }
 }
 
-setInterval(main, 650);
+setInterval(main, 800);

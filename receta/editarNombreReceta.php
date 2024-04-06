@@ -1,23 +1,22 @@
 <?php
+include_once '../API/db.php';
+
     if(!empty($_POST)){
-        if(isset($_POST["id-receta"]) && isset($_POST["nombre-receta"])){
-                $host = "localhost";
-                $user = "root";
-                $password = "";
-                $db = "pesoPlumaDb";
-                $con = new mysqli($host, $user, $password, $db);
+        if(isset($_GET["id"]) && isset($_POST["nombre-receta"])){
+                $db = new DB();
+                $con = $db->conectarDB();
                 
-                $idreceta = $_POST["id-receta"];
+                $idreceta = $_GET["id"];
                 $nombrereceta = $_POST["nombre-receta"];
 
                 $sql = "UPDATE Recipe SET recipe_name = '$nombrereceta' WHERE recipe_id = '$idreceta';";
                 
                 try {
                     $query = $con->query($sql);
-                    print "<script>alert(\"Editado exitosamente.\");window.location='editarview.php?id=$idreceta';</script>";
+                    print "<script>alert(\"Editado exitosamente.\");window.location='editarReceta.php?id=$idreceta';</script>";
                 } catch (Exception $e){
                     $error = mysqli_error($con);
-                    print "<script>alert('Error al editar: $error');window.location = 'editarview.php?id=$idreceta';</script>";                
+                    print "<script>alert('Error al editar: $error');window.location = 'editarReceta.php?id=$idreceta';</script>";                
                 }
         
         }
