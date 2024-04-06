@@ -1,131 +1,113 @@
 <?php
-    $host = "localhost";
-    $user = "root";
-    $password = "samc2003";
-    $db = "pesoPlumaDb";
-    $con = new mysqli($host, $user, $password, $db);
-    $sql = "SELECT * FROM Recipe";
-    $query = $con->query($sql);
+include_once '../API/recipe.php';
+
+$recipe = new Recipe();
+$res = $recipe->obtenerRecetas();
+
+// TODO: Si no hay suficiente de algun ingrediente al medir, no se puede realizar la receta.
 ?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" class="h-full">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>php</title>
-    <!--  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.bootstrap5.css">
-    <script defer src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script defer src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
-    <script defer src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
-    <script defer src="./index.js"></script>
-    <!--  -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <style>
-        *{
-            box-sizing: border-box;
-            padding: 0%;
-            margin: 0;
-        }
-        .contenedor{
-            display: flex;
-            justify-content: center;
-            margin-top: 5vh;
-        }.contenedor2{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-    
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Medición en vivo</title>
+    <script defer src="index.js"></script>
+    <script defer src="../funcionesJS/funciones.js"></script>
 </head>
-<body>
-    <br>
-    <ul class="nav justify-content-center">
-        <li class="nav-item">
-            <a class="nav-link" href="./../pesoEnVivo/index.php">Medicion en vivo</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="./../receta/index.php">Recetas</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="./../index.php">Inicio</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="./../inventario/index.php">Inventario</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="./../consumo/index.php" aria-current="page">Informe de consumo</a>
-        </li>
-    </ul>
-    <hr>
-    <div class="contenedor2">
-        <h2>Recetas</h2>
-        <div class="row">
-            <table id="tablaRecetas" class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Nombre de la Receta</th>
-                    <th scope="col"> </th>
-                    <th scope="col"> </th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                <?php while ($r=$query->fetch_array()):?>
-                    <tr>
-                        <td><?php echo $r["recipe_id"];?></td>
-                        <td><?php echo $r["recipe_name"];?></td>
-                        <td>
-                            <a href="" class="btn btn-success">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
-                                </svg>
-                                Iniciar
-                            </a>
-                        </td>
-                        <td>
-                            <a href="editarview.php?id=<?php echo $r["recipe_id"];?>" class="btn btn-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"></path>
-                                </svg>
-                                Editar
-                            </a>
-                        </td>
-                        <td>
-                            <a href="./eliminarReceta.php?id=<?php echo $r["recipe_id"];?>" class="btn btn-outline-danger">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"></path>
-                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"></path>
-                                </svg>
-                                Eliminar
-                            </a>
-                        </td>
-                    </tr>
-                <?php endwhile;?>
-                </tbody>
-              </table>
+<body class="h-full">
+    <header>
+        <div class="bg-blue-700 flex h-16 w-full shadow justify-around items-center">
+            <h1 class="basis-1/4 text-white text-xl font-bold text-center">
+                PesoPluma
+            </h1>
+            <nav class="flex-auto">
+                <ul class="flex justify-around">
+                    <li><a class="text-white text-md" href="../index.php">Inicio</a></li>
+                    <li><a class="text-white text-md" href="">Receta</a></li>
+                    <li><a class="text-white text-md" href="">Inventario</a></li>
+                    <li><a class="text-white text-md" href="">Informe de Consumo</a></li>
+                </ul>
+            </nav>
         </div>
-    </div>
-    <div class="contenedor2">
-        <h2 style="align-self: baseline;margin: 25px 140px;">Agregar Receta</h2>
-        <form class="container" action="agregar.php" method="post">
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="nombre-receta" name="nombre-receta" placeholder="">
-            <label for="nombre-receta">Nombre de la receta</label>
+    </header>
+
+    <main>
+        <article class="flex flex items-center flex-row justify-beetween h-[420px] p-4">
+
+        <div class="basis-1/4 flex flex-col justify-start h-full items-center border mr-4 rounded shadow">
+
+            <h2 class="text-md font-bold mb-4 mt-4">
+                Medición en Vivo
+            </h2>
+
+            <section>
+                <h3 class="text-center">Lectura deseada:</h3>
+                <p class="text-center"> <span id="lectura_deseada">0</span> gramos</p>
+            </section>
+
+            <section class="pt-4">
+                <h3 class="text-center">Lectura actual:</h3>
+                <p class="text-center"> <span id="dato_procesado">0</span> gramos</p>
+            </section>
+
+            <section class="pt-4">
+                <h3 class="text-center text-md font-bold">Acción Requerida:</h3>
+                <p class="text-center"> <span id="accion_requerida"></span> </p>
+            </section>
         </div>
-        <button type="submit" class="btn btn-success">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
-                <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"/>
-            </svg>
-            Agregar
-        </button>
-        </form>    
+
+        <div class="basis-1/4 flex flex-col justify-start h-full items-center border mr-4 rounded shadow">
+            <h2 class="text-md font-bold mb-4 mt-4">
+                Paso Receta <span id="paso-receta"> </span>
+            </h2>
+
+            <section>
+                <h3 class="text-center">Ingrediente:</h3>
+                <p class="text-center"> <span id="ing_receta">0</span> </p>
+            </section>
+
+            <section class="pt-4">
+                <h3 class="text-center">Cantidad</h3>
+                <p class="text-center"> <span id="cantidad_ing">0</span> <span id="unidad_ing"></span> </p>
+            </section>
+
+            <section class="pt-4">
+                <h3 class="text-center text-md font-bold">Descripción:</h3>
+                <p class="text-center"> <span id="description"></span> </p>
+            </section>
+        </div>
+
+        <section class="flex-auto h-full">
+            <form action="index.php" method="post">
+
+                <h3 class="text-lg border-b text-blue-700 border-blue-700 mb-3 font-bold">
+                    Receta:
+                </h3>
+                <select name="receta" id="receta" class="border border-gray-300 rounded mb-3">
+                    <option value="none" selected disabled>Selecciona una opción</option>
+                    <?php 
+                        while ($row = $res->fetch_assoc()) {
+                            echo "<option value=\"{$row['recipe_id']}\">{$row['recipe_name']}</option>";
+                        }
+                    ?>
+                </select>
+                <a href="administrar.php">
+                    <span id="administrar-recetas" class="block bg-blue-700 text-white py-1 px-3 rounded hover:bg-blue-transition-colors block mb-3 shadow w-44 text-center">
+                        Administrar Recetas
+                    </span>
+                </a>
+
+                <button onclick="siguientePaso()" id="confirmar" class="bg-blue-700 text-white py-1 px-3 rounded hover:bg-blue-transition-colors block mt-3 shadow" disabled="disabled" type="button">
+                    Registrar Consumo
+                </button>
+
+            </form>
+        </section>
+    </article>
     </div>
-    <br>
+    </main>
 </body>
 </html>

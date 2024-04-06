@@ -13,16 +13,16 @@
         </header>
 
         <div class="flex items-center flex-col justify-around h-[475px]">
-            <a class="p-5 border-[3px] rounded-[25px] shadow-md border-blue-700 font-bold text-blue-700 bg-gray-100" href="receta\index.php">
-                Seguir Receta
-            </a>
-            <a class="p-5 border-[3px] rounded-[25px] shadow-md border-blue-700 font-bold text-blue-700 bg-gray-100" href="pesoEnVivo\index.php">
+            <a class="p-5 border-[3px] rounded-[25px] shadow-md border-blue-700 font-bold text-blue-700 bg-gray-100 w-60 text-center" href="pesoEnVivo\index.php">
                 Medición en Vivo
             </a>
-            <a class="p-5 border-[3px] rounded-[25px] shadow-md border-blue-700 font-bold text-blue-700 bg-gray-100" href="inventario\index.php">
+            <a class="p-5 border-[3px] rounded-[25px] shadow-md border-blue-700 font-bold text-blue-700 bg-gray-100 w-60 text-center" href="receta\index.php">
+                Receta
+            </a>
+            <a class="p-5 border-[3px] rounded-[25px] shadow-md border-blue-700 font-bold text-blue-700 bg-gray-100 w-60 text-center" href="inventario\index.php">
                 Inventario
             </a>
-            <a class="p-5 border-[3px] rounded-[25px] shadow-md border-blue-700 font-bold text-blue-700 bg-gray-100" href="consumo\index.php">
+            <a class="p-5 border-[3px] rounded-[25px] shadow-md border-blue-700 font-bold text-blue-700 bg-gray-100 w-60 text-center" href="consumo\index.php">
                 Informe de Consumo
             </a>
         </div>

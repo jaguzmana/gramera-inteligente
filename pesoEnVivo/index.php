@@ -3,6 +3,8 @@ include_once '../API/ingredientAPI.php';
 
 $ingredient = new IngredientAPI();
 $res = $ingredient->obtenerIngredientes();
+
+// TODO: Revisar las alertas 
 ?>
 
 <!DOCTYPE html>
@@ -13,6 +15,7 @@ $res = $ingredient->obtenerIngredientes();
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Medición en vivo</title>
     <script defer src="index.js"></script>
+    <script defer src="../funcionesJS/funciones.js"></script>
 </head>
 <body class="h-full">
     <header>
@@ -42,17 +45,17 @@ $res = $ingredient->obtenerIngredientes();
 
             <section>
                 <h3 class="text-center">Lectura deseada:</h3>
-                <p class="text-center"> <span id="lectura_deseada">0</span> </p>
+                <p class="text-center"> <span id="lectura_deseada">0</span> <span id="unit1"></span></p>
             </section>
 
             <section class="pt-4">
                 <h3 class="text-center">Lectura actual:</h3>
-                <p class="text-center"> <span id="dato_procesado">0</span> </p>
+                <p class="text-center"> <span id="dato_procesado">0</span> <span id="unit2"></span></p>
             </section>
 
             <section class="pt-4">
                 <h3 class="text-center text-md font-bold">Acción Requerida:</h3>
-                <p class="text-center"> <span id="accion_requerida"></span> </p>
+                <p class="text-center"> <span id="accion_requerida"></span></p>
             </section>
         </div>
 

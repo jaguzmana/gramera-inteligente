@@ -2,7 +2,7 @@
     if(!empty($_GET)){
         $host = "localhost";
         $user = "root";
-        $password = "samc2003";
+        $password = "";
         $db = "pesoPlumaDb";
         $con = new mysqli($host, $user, $password, $db);
         $sql = "DELETE FROM Recipe WHERE recipe_id = " . $_GET["id"];

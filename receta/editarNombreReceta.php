@@ -3,7 +3,7 @@
         if(isset($_POST["id-receta"]) && isset($_POST["nombre-receta"])){
                 $host = "localhost";
                 $user = "root";
-                $password = "samc2003";
+                $password = "";
                 $db = "pesoPlumaDb";
                 $con = new mysqli($host, $user, $password, $db);
                 

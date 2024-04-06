@@ -13,6 +13,12 @@ class Ingredient extends DB {
 
         return $query;
     }
+    
+    function agregarConsumoIngrediente($cantidad_usada, $id_ingrediente) {
+        $query = $this->conectarDB()->query("UPDATE Ingredient SET ingredient_amount = ingredient_amount - $cantidad_usada WHERE ingredient_id = $id_ingrediente");
+
+        return $query;
+    }
 }
 
 ?>
