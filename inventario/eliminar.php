@@ -1,10 +1,9 @@
-<?php 
+<?php
+include_once '../API/db.php';
+
     if(!empty($_GET)){
-        $host = "localhost";
-        $user = "root";
-        $password = "samc2003";
-        $db = "pesoPlumaDb";
-        $con = new mysqli($host, $user, $password, $db);
+        $db = new DB();
+        $con = $db->conectarDB();
         $sql = "DELETE FROM Ingredient WHERE ingredient_id = " . $_GET["id"];
 
         try {

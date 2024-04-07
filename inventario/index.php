@@ -1,154 +1,163 @@
 <?php
-    $host = "localhost";
-    $user = "root";
-    $password = "samc2003";
-    $db = "pesoPlumaDb";
-    $con = new mysqli($host, $user, $password, $db);
-    $sql = "SELECT * FROM Ingredient";
-    $query = $con->query($sql);
+include_once '../API/ingredient.php';
+
+$ingredient = new Ingredient();
+$res = $ingredient->obtenerIngredientes();
+
+$ingredientes_array = array();
+
+// Obtener cada fila de resultado y agregarla al array
+while ($row = $res->fetch_assoc()) {
+    $ingredientes_array[] = $row;
+}
+
+// Número de resultados por página
+$resultados_por_pagina = 6;
+
+// Número total de recetas
+$total_ingredientes = count($ingredientes_array);
+
+// Número total de páginas
+$total_paginas = ceil($total_ingredientes / $resultados_por_pagina);
+
+// Obtener la página actual
+if (!isset($_GET['pagina'])) {
+    $pagina_actual = 1;
+} else {
+    $pagina_actual = $_GET['pagina'];
+}
+
+// Calcular el índice de inicio para la consulta SQL
+$indice_inicio = ($pagina_actual - 1) * $resultados_por_pagina;
+
+// Obtener las recetas para la página actual
+$ingredientes_pagina = array_slice($ingredientes_array, $indice_inicio, $resultados_por_pagina);
 ?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" class="h-full">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>php</title>
-    <!--  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.bootstrap5.css">
-    <script defer src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script defer src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
-    <script defer src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
-    <script defer src="./index.js"></script>
-    <!--  -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <style>
-        *{
-            box-sizing: border-box;
-            padding: 0%;
-            margin: 0;
-        }
-        .contenedor{
-            display: flex;
-            justify-content: center;
-            margin-top: 5vh;
-        }.contenedor2{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-    
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Modo Inventario</title>
 </head>
-<body>
-    <br>
-    <ul class="nav justify-content-center">
-        <li class="nav-item">
-            <a class="nav-link" href="./../pesoEnVivo/index.php">Medicion en vivo</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="./../receta/index.php">Recetas</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="./../index.php">Inicio</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="./../inventario/index.php">Inventario</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="./../consumo/index.php" aria-current="page">Informe de consumo</a>
-        </li>
-    </ul>
-    <hr>
-    <div class="contenedor2">
-        <h2>Inventario</h2>
-        <div class="row">
-            <table id="tablaInventario" class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Ingrediente</th>
-                    <th scope="col">Cantidad</th>
-                    <th scope="col">Unidad</th>
-                    <th scope="col">Densidad</th>
-                    <th scope="col"> </th>
-                    <th scope="col"> </th>
-                  </tr>
-                </thead>
-                <tbody>
-                <?php while ($r=$query->fetch_array()):?>
-                    <tr>
-                        <td><?php echo $r["ingredient_id"];?></td>
-                        <td><?php echo $r["ingredient_name"];?></td>
-                        <td><?php echo $r["ingredient_amount"];?></td>
-                        <td><?php echo $r["ingredient_unit"];?></td>
-                        <td><?php echo $r["ingredient_density"];?></td>
-                        <td>
-                            <a href="eliminar.php?id=<?php echo $r["ingredient_id"];?>" class="btn btn-outline-danger">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"></path>
-                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"></path>
-                                </svg>
-                                Eliminar
-                            </a>
-                        </td>
-                        <td>
-                            <a href="editarview.php?id=<?php echo $r["ingredient_id"];?>" class="btn btn-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"></path>
-                                </svg>
-                            Editar
-                            </a>
-                        </td>
-                    </tr>
-                <?php endwhile;?>
-                </tbody>
-              </table>
+<body class="h-full">
+    <header>
+        <div class="bg-blue-700 flex h-16 w-full shadow justify-around items-center">
+            <h1 class="basis-1/4 text-white text-xl font-bold text-center">
+                PesoPluma
+            </h1>
+            <nav class="flex-auto">
+                <ul class="flex justify-around">
+                    <li><a class="text-white text-md" href="../index.php">Inicio</a></li>
+                    <li><a class="text-white text-md" href="../receta/index.php">Receta</a></li>
+                    <li><a class="text-white text-md" href="../pesoEnVivo/index.php">Medición en Vivo</a></li>
+                    <li><a class="text-white text-md" href="../consumo/index.php">Informe de Consumo</a></li>
+                </ul>
+            </nav>
         </div>
-    </div>
-    <div class="contenedor2">
-        <h2 style="align-self: baseline;margin: 25px 140px;">Agregar</h2>
-        <form class="container" action="agregar.php" method="post">
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="nombre-ingrediente" name="nombre-ingrediente" placeholder="">
-            <label for="nombre-ingrediente">Nombre del ingrediente</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="number" step="any" class="form-control" id="cantidad-ingrediente" name="cantidad-ingrediente" placeholder="">
-            <label for="cantidad-ingrediente">Cantidad del ingrediente</label>
-        </div>
-        <div class="form-floating">
-            <select class="form-select" id="unidad-ingrediente" name="unidad-ingrediente" aria-label="Floating label select example">
-                <option value="gramos">gramos</option>
-                <option value="kilogramos">kilogramos</option>
-                <option value="mililitros">mililitros</option>
-                <option value="litros">litros</option>
-                <option value="unidades">unidades</option>
-                <option value="libras">libras</option>
-                <option value="onzas">onzas</option>
-                <option value="tazas">tazas</option>
-                <option value="medias tazas">medias tazas</option>
-                <option value="cucharadas">cucharadas</option>
-                <option value="cucharaditas">cucharaditas</option>
-                <option value="pizcas">pizcas</option>
-            </select>
-            <label for="unidad-ingrediente">Unidad</label>
-        </div>
-        <br>
-        <div class="form-floating mb-3">
-            <input type="number" step="any" class="form-control" id="densidad-ingrediente" name="densidad-ingrediente" placeholder="">
-            <label for="densidad-ingrediente">Densidad del ingrediente</label>
-        </div>
-        <button type="submit" class="btn btn-success">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
-                <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"/>
-            </svg>
-            Agregar
-        </button>
-        </form>    
-    </div>
-    <br>
+    </header>
+
+    <main>        
+        <article class="flex flex-row justify-beetween p-4">
+            
+            <div class="flex flex-col items-center flex-auto">
+                <h2 class="font-bold pb-1">Inventario</h2>
+                <table class="min-w-full divide-y divide-gray-200 border rounded">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-center">ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Ingrediente</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Cantidad</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Unidad</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Densidad</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Editar</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Eliminar</th>
+                            <!-- Agrega más encabezados aquí si es necesario -->
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <?php foreach ($ingredientes_pagina as $ingrediente): ?>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center"><?php echo $ingrediente['ingredient_id']; ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center"><?php echo $ingrediente["ingredient_name"]; ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center"><?php echo $ingrediente['ingredient_amount']; ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center"><?php echo $ingrediente["ingredient_unit"]; ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center"><?php echo $ingrediente["ingredient_density"]; ?></td>
+                            <!-- Agrega más columnas aquí si es necesario -->
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
+                                <div class="flex justify-center">
+                                    <a href="editarIngrediente.php?id=<?php echo $ingrediente["ingredient_id"];?>" class="flex justify-center items-center bg-blue-700 text-white rounded shadow p-1 w-8 h-8">
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
+                                    </svg>
+                                    </a>
+                                </div>
+                            </td>
+
+
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
+                                <div class="flex justify-center">
+                                    <a href="eliminar.php?id=<?php echo $ingrediente["ingredient_id"];?>" class="flex justify-center items-center bg-red-700 text-white rounded shadow p-1 w-8 h-8">
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+                                    </svg>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <div class="flex justify-center mt-4">
+                    <?php for ($i = 1; $i <= $total_paginas; $i++): ?>
+                    <a href="?pagina=<?php echo $i; ?>" class="mx-1 px-3 py-1 bg-blue-700 text-white rounded hover:bg-blue-500"><?php echo $i; ?></a>
+                    <?php endfor; ?>
+                </div>
+            </div>
+
+            <div class="flex flex-col basis-1/4 pl-4">
+                <h2 class="text-center font-bold pb-1">Agregar Ingrediente</h2>
+                <form action="agregar.php" method="post">
+                    <h3 class="text-lg border-b text-blue-700 border-blue-700 mb-3 font-bold w-full">
+                        Nombre:
+                    </h3>
+                    <input type="text" name="nombre-ingrediente" id="nombre-ingrediente" class="px-1 border rounded w-full">
+
+                    <h3 class="text-lg border-b text-blue-700 border-blue-700 mb-3 font-bold w-full mt-1">
+                        Cantidad:
+                    </h3>
+                    <input type="number" id="cantidad-ingrediente" name="cantidad-ingrediente" class="border rounded w-full px-1" value="0">
+
+                    <h3 class="text-lg border-b text-blue-700 border-blue-700 mb-3 font-bold w-full mt-1">
+                        Unidad:
+                    </h3>
+                    <select class="block border rounded mb-1 w-full" id="unidad-ingrediente" name="unidad-ingrediente" aria-label="Floating label select example">
+                    <option value="none" selected disabled>Selecciona una opción</option>
+                    <option value="gramos">Gramos</option>
+                    <option value="kilogramos">Kilogramos</option>
+                    <option value="mililitros">Mililitros</option>
+                    <option value="litros">Litros</option>
+                    <option value="unidades">Unidades</option>
+                    <option value="libras">Libras</option>
+                    <option value="onzas">Onzas</option>
+                    <option value="tazas">Tazas</option>
+                    <option value="medias tazas">Medias Tazas</option>
+                    <option value="cucharadas">Cucharadas</option>
+                    <option value="pizcas">Pizcas</option>
+                    </select>
+
+                    <h3 class="text-lg border-b text-blue-700 border-blue-700 mb-3 font-bold w-full mt-1">
+                        Densidad:
+                    </h3>
+                    <input type="number" name="densidad-ingrediente" id="densidad-ingrediente" class="border rounded w-full px-1" step="any" value="0">
+
+                    <button type="submit" class="block bg-blue-700 text-white py-1 px-3 rounded hover:bg-blue-transition-colors w-26 mt-3 shadow">Agregar</button>
+                </form>
+            </div>
+
+        </article>
+    </main>
 </body>
 </html>
