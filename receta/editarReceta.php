@@ -83,25 +83,25 @@ include_once '../API/db.php';
                 <table class="min-w-full divide-y divide-gray-200 border rounded">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ingrediente</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cantidad</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Unidad</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Eliminar</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-center">ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Ingrediente</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Cantidad</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Unidad</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Descripción</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Eliminar</th>
                             <!-- Agrega más encabezados aquí si es necesario -->
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                     <?php foreach ($pasos_pagina as $paso):?>
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm"><?php echo $paso["amount_id"];?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm"><?php echo $paso["ingredient_name"];?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm"><?php echo $paso["amount_amount"];?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm"><?php echo $paso["amount_unit"];?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm"><?php echo $paso["amount_description"];?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center"><?php echo $paso["amount_id"];?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center"><?php echo $paso["ingredient_name"];?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center"><?php echo $paso["amount_amount"];?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center"><?php echo $paso["amount_unit"];?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center"><?php echo $paso["amount_description"];?></td>
 
-                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
                                 <div class="flex justify-center">
                                     <a href="eliminarPaso.php?id=<?php echo $paso["amount_id"];?>&id_receta=<?php echo $id;?>" class="flex justify-center items-center bg-red-700 text-white rounded shadow p-1 w-8 h-8">
                                     <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">

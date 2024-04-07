@@ -66,6 +66,7 @@ async function agregarConsumoIngrediente(cantidad_usada, id_ingrediente) {
     }
 }
 
+// TODO: Falta terminar por completo.
 async function conversionUnidades(lecturaActual, ingrediente, unidades1, unidades2) {
     let resultado = 0;
 

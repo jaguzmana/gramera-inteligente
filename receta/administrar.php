@@ -52,9 +52,9 @@ $recetas_pagina = array_slice($recipes_array, $indice_inicio, $resultados_por_pa
             <nav class="flex-auto">
                 <ul class="flex justify-around">
                     <li><a class="text-white text-md" href="../index.php">Inicio</a></li>
-                    <li><a class="text-white text-md" href="">Receta</a></li>
-                    <li><a class="text-white text-md" href="">Inventario</a></li>
-                    <li><a class="text-white text-md" href="">Informe de Consumo</a></li>
+                    <li><a class="text-white text-md" href="../receta/index.php">Receta</a></li>
+                    <li><a class="text-white text-md" href="../inventario/index.php">Inventario</a></li>
+                    <li><a class="text-white text-md" href="../consumo/index.php">Informe de Consumo</a></li>
                 </ul>
             </nav>
         </div>
@@ -65,25 +65,25 @@ $recetas_pagina = array_slice($recipes_array, $indice_inicio, $resultados_por_pa
         
         <article class="flex flex-row justify-beetween p-4">
             
-            <div class="flex flex-col items-center basis-1/2">
+            <div class="flex flex-col items-center flex-auto">
                 <h2 class="font-bold pb-1">Recetas Guardadas</h2>
                 <table class="min-w-full divide-y divide-gray-200 border rounded">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Editar</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Eliminar</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-center">ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Nombre</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Editar</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Eliminar</th>
                             <!-- Agrega más encabezados aquí si es necesario -->
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                         <?php foreach ($recetas_pagina as $receta): ?>
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm"><?php echo $receta['recipe_id']; ?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm"><?php echo $receta['recipe_name']; ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center"><?php echo $receta['recipe_id']; ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center"><?php echo $receta['recipe_name']; ?></td>
                             <!-- Agrega más columnas aquí si es necesario -->
-                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
                                 <div class="flex justify-center">
                                     <a href="editarReceta.php?id=<?php echo $receta["recipe_id"];?>" class="flex justify-center items-center bg-blue-700 text-white rounded shadow p-1 w-8 h-8">
                                     <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -94,7 +94,7 @@ $recetas_pagina = array_slice($recipes_array, $indice_inicio, $resultados_por_pa
                             </td>
 
 
-                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
                                 <div class="flex justify-center">
                                     <a href="eliminarReceta.php?id=<?php echo $receta["recipe_id"];?>" class="flex justify-center items-center bg-red-700 text-white rounded shadow p-1 w-8 h-8">
                                     <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -114,7 +114,7 @@ $recetas_pagina = array_slice($recipes_array, $indice_inicio, $resultados_por_pa
                 </div>
             </div>
 
-            <div class="flex flex-col flex-auto pl-4">
+            <div class="flex flex-col basis-1/3 pl-4">
                 <h2 class="text-center font-bold pb-1">Agregar Recetas</h2>
                 <form action="agregar.php" method="post">
                     <h3 class="text-lg border-b text-blue-700 border-blue-700 mb-3 font-bold w-full">

@@ -17,7 +17,7 @@ $res = $recipe->obtenerRecetas();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Medición en vivo</title>
+    <title>Modo Receta</title>
     <script defer src="index.js"></script>
     <script defer src="../funcionesJS/funciones.js"></script>
 </head>
