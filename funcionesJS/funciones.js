@@ -34,7 +34,7 @@ async function obtenerIngredientePorIDJSON(id) {
 async function obtenerDatoSensor() {
     try {
         const response = await fetch('../API/lectura_sensor.txt');
-        const data = response.text();
+        const data = await response.text();
         return data;
     } catch (error) {
         console.error('Error al recuperar los datos:', error);
