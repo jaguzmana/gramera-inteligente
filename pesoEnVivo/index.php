@@ -3,8 +3,6 @@ include_once '../API/ingredientAPI.php';
 
 $ingredient = new IngredientAPI();
 $res = $ingredient->obtenerIngredientes();
-
-// TODO: Revisar las alertas 
 ?>
 
 <!DOCTYPE html>

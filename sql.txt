@@ -17,9 +17,9 @@ CREATE TABLE Consume (
     consume_date DATETIME NOT NULL,
     consume_amount FLOAT,
     consume_unit VARCHAR(15) NOT NULL,
-	consume_description VARCHAR(255),
+    consume_description VARCHAR(255),
     ingredient_id INT,
-    FOREIGN KEY (ingredient_id) REFERENCES Ingredient(ingredient_id)
+    FOREIGN KEY (ingredient_id) REFERENCES Ingredient(ingredient_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Recipe (
@@ -34,8 +34,8 @@ CREATE TABLE Amount (
     amount_description VARCHAR(255),
     ingredient_id INT,
     recipe_id INT,
-    FOREIGN KEY (ingredient_id) REFERENCES Ingredient(ingredient_id),
-    FOREIGN KEY (recipe_id) REFERENCES Recipe(recipe_id)
+    FOREIGN KEY (ingredient_id) REFERENCES Ingredient(ingredient_id) ON DELETE CASCADE,
+    FOREIGN KEY (recipe_id) REFERENCES Recipe(recipe_id) ON DELETE CASCADE
 );
 
 -----------------------------------------------------------------------------

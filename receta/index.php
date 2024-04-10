@@ -3,11 +3,6 @@ include_once '../API/recipe.php';
 
 $recipe = new Recipe();
 $res = $recipe->obtenerRecetas();
-
-/* 
-    TODO: 
-    - Solo se pueden eliminar recetas sin pasos.
-*/
 ?>
 
 <!DOCTYPE html>
