@@ -6,7 +6,6 @@ $res = $recipe->obtenerRecetas();
 
 /* 
     TODO: 
-    - Si no hay suficiente de algun ingrediente al medir, no se puede realizar la receta.
     - Solo se pueden eliminar recetas sin pasos.
 */
 ?>

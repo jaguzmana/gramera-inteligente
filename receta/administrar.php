@@ -120,7 +120,7 @@ $recetas_pagina = array_slice($recipes_array, $indice_inicio, $resultados_por_pa
                     <h3 class="text-lg border-b text-blue-700 border-blue-700 mb-3 font-bold w-full">
                         Nombre Receta:
                     </h3>
-                    <input type="text" name="nombre-receta" id="nombre-receta" class="border rounded w-full">
+                    <input type="text" name="nombre-receta" id="nombre-receta" class="border rounded w-full px-1">
                     <button type="submit" class="block bg-blue-700 text-white py-1 px-3 rounded hover:bg-blue-transition-colors w-26 mt-3 shadow">Agregar</button>
                 </form>
             </div>

@@ -65,9 +65,9 @@ include_once '../API/db.php';
             <nav class="flex-auto">
                 <ul class="flex justify-around">
                     <li><a class="text-white text-md" href="../index.php">Inicio</a></li>
-                    <li><a class="text-white text-md" href="">Receta</a></li>
-                    <li><a class="text-white text-md" href="">Inventario</a></li>
-                    <li><a class="text-white text-md" href="">Informe de Consumo</a></li>
+                    <li><a class="text-white text-md" href="../pesoEnVivo/index.php">Medición en Vivo</a></li>
+                    <li><a class="text-white text-md" href="../inventario/index.php">Inventario</a></li>
+                    <li><a class="text-white text-md" href="../consumo/index.php">Informe de Consumo</a></li>
                 </ul>
             </nav>
         </div>
