@@ -9,10 +9,10 @@ if(!empty($_POST)){
     
         $fechainicial = $_POST["fecha-inicial"];
         $fechafinal = $_POST["fecha-final"];
-        $sql = "SELECT Consume.consume_date, Consume.consume_amount, Consume.consume_unit, Ingredient.ingredient_name FROM Consume JOIN Ingredient ON Consume.ingredient_id = Ingredient.ingredient_id WHERE Consume.consume_date between '$fechainicial' and '$fechafinal';";
+        $sql = "SELECT Consume.consume_date, Consume.consume_amount, Consume.consume_unit, Ingredient.ingredient_name FROM Consume JOIN Ingredient ON Consume.ingredient_id = Ingredient.ingredient_id WHERE Consume.consume_date between '$fechainicial' and '$fechafinal' ORDER BY Consume.consume_date DESC";
     }
 }else{
-    $sql = "SELECT Consume.consume_date, Consume.consume_amount, Consume.consume_unit, Ingredient.ingredient_name FROM Consume JOIN Ingredient ON Consume.ingredient_id = Ingredient.ingredient_id";
+    $sql = "SELECT Consume.consume_date, Consume.consume_amount, Consume.consume_unit, Ingredient.ingredient_name FROM Consume JOIN Ingredient ON Consume.ingredient_id = Ingredient.ingredient_id ORDER BY Consume.consume_date DESC";
 }
 
 $res = $con->query($sql); 
