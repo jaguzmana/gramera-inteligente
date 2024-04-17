@@ -5,20 +5,20 @@ async function main() {
         //console.log(uni1.value);
         let uni2 = document.getElementById("unidad-gastronomica-2");
         //console.log(uni2.value);
-        let cantidadDeseada = document.getElementById("cantidad")
+        let cantidadDeseada = document.getElementById("cantidad");
         //console.log(cantidad.value)
 
         if (ing.value != "none" && uni1.value != "none" && uni2.value != "none") {
             const ingrediente = await obtenerIngredientePorIDJSON(ing.value);
+            const unidadIng = ingrediente['unit'];
             //console.log(ingrediente);
 
             // Validar si hay suficiente cantidad del ingrediente
-            let cantidadDeseadaGramos = await conversionUnidades(cantidadDeseada.value, ingrediente, uni1.value, 'gramos');
+            let cantidadDeseadaGramos = await conversionUnidades(cantidadDeseada.value, ingrediente, uni1.value, unidadIng);
             
             if (cantidadDeseadaGramos <= parseFloat(ingrediente['amount'])) {
                 const lecturaActual = await obtenerDatoSensor();
-
-                let resultado = await conversionUnidades(lecturaActual, ingrediente, uni1.value, uni2.value);
+                let resultado = await conversionUnidades(lecturaActual, ingrediente, unidadIng, uni2.value);
                 let resultadoCD = await conversionUnidades(cantidadDeseada.value, ingrediente, uni1.value, uni2.value);
     
                 document.getElementById("dato_procesado").innerText = resultado;
@@ -31,7 +31,7 @@ async function main() {
                 window.ingredienteIDGlobal = ing.value;
                 window.unidadIngredienteGlobal = uni2.value;
                 window.ingredienteGlobal = ingrediente;
-                window.resultadoGlobalGramos = resultado;
+                window.resultadoGlobalGramos = parseFloat(lecturaActual).toFixed(3);
     
                 let botonConfirmar = document.getElementById("confirmar");
                 if ((resultado >= resultadoCD*0.98) && (resultado <= resultadoCD*1.02)) {
@@ -48,11 +48,11 @@ async function main() {
     
                     // Alarmas
                     if (resultado < resultadoCD*0.98) {
-                        console.log("Agrege más ingrediente");
+                        //console.log("Agrege más ingrediente");
                         document.getElementById("accion_requerida").innerText = "Agrege más ingrediente";
                         beep();
                     } else if (resultado > resultadoCD*1.02) {
-                        console.log("Retire cantidad del ingrediente");
+                        //console.log("Retire cantidad del ingrediente");
                         document.getElementById("accion_requerida").innerText = "Retire cantidad del ingrediente";
                         beep();
                     }
