@@ -11,9 +11,10 @@ async function validarIngRecetaPorIDJSON(id) {
     }
 }
 
+// TODO: Si la cantidad inicial son unidades no se puede hacer la conversion, debe permitir hacer consumo.
 async function main() {
     try {
-        console.log(pasoActual);
+        //console.log(pasoActual);
         const selectReceta = document.getElementById("receta");
         const botonAdministrar = document.getElementById("administrar-recetas");
         const botonConfirmar = document.getElementById("confirmar");
@@ -21,13 +22,17 @@ async function main() {
 
         if (selectReceta.value != 'none') {
             const listaIngNoCantidad = await validarIngRecetaPorIDJSON(selectReceta.value);
-            console.log(listaIngNoCantidad.length);
+            //console.log(listaIngNoCantidad.length);
 
             if (listaIngNoCantidad.length == 0) {
+                // Deshabilitar boton selección receta y administrar recetas.
                 selectReceta.disabled = true;
                 botonAdministrar.classList.remove('bg-blue-700');
                 botonAdministrar.classList.add('bg-gray-500');
+                botonAdministrar.href = "";
+                botonAdministrar.classList.add('pointer-events-none');
 
+                // Obtener pasos
                 const pasosReceta = await obtenerPasosPorIDJSON(selectReceta.value);
                 conteoPaso.innerText = `(${pasoActual + 1}/${pasosReceta.length})`;
 
@@ -54,7 +59,8 @@ async function main() {
                 const ingrediente = await obtenerIngredientePorIDJSON(ingID);
                 window.ingredienteGlobal = ingrediente;
                 
-                let cantidadIngGramos = await conversionUnidades(pasosReceta[pasoActual]['amount'], ingrediente, pasosReceta[pasoActual]['unit'], 'gramos');
+                // TODO: Revisar si la conversion se esta haciendo correctamente. (Aparentemente si)
+                let cantidadIngGramos = await conversionUnidades(pasosReceta[pasoActual]['amount'], ingrediente, pasosReceta[pasoActual]['unit'], ingrediente['unit']);
 
                 document.getElementById('lectura_deseada').innerText = cantidadIngGramos;
                 document.getElementById('dato_procesado').innerText = parseFloat(lecturaSensor).toFixed(3);
@@ -62,11 +68,10 @@ async function main() {
                 if ((lecturaSensor >= cantidadIngGramos*0.98) && (lecturaSensor <= cantidadIngGramos*1.02)) {
                     //console.log("Valor dentro del rango")
                     // Creando variables globales
-                    // TODO: Verificar el tipo de unidad en la que se guarda el ingrediente en la tabla.
                     window.resultadoGlobal = parseFloat(lecturaSensor).toFixed(3);
                     window.ingredienteIDGlobal = ingID;
-                    window.unidadIngredienteGlobal = 'gramos'; //pasosReceta[pasoActual]['unit'];
-                    window.resultadoGlobalGramos = cantidadIngGramos;
+                    window.unidadIngredienteGlobal = ingrediente['unit'];
+                    window.resultadoGlobalGramos = cantidadIngGramos; 
 
                     botonConfirmar.disabled = false;
                     botonConfirmar.classList.remove('bg-gray-500');
@@ -80,11 +85,11 @@ async function main() {
 
                     // Alarmas
                     if (lecturaSensor < cantidadIngGramos*0.98) {
-                        console.log("Agrege más ingrediente");
+                        //console.log("Agrege más ingrediente");
                         document.getElementById("accion_requerida").innerText = "Agrege más ingrediente";
                         beep();
                     } else if (lecturaSensor > cantidadIngGramos*1.02) {
-                        console.log("Retire cantidad del ingrediente");
+                        //console.log("Retire cantidad del ingrediente");
                         document.getElementById("accion_requerida").innerText = "Retire cantidad del ingrediente";
                         beep();
                     }
