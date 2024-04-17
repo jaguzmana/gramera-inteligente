@@ -42,9 +42,9 @@ async function obtenerDatoSensor() {
     }
 }
 
-async function agregarConsumo(datetime, amount, unit, ingredient_id) {
+function agregarConsumo(datetime, amount, unit, ingredient_id) {
     try {
-        const response = await fetch(`../API/api.php?action=agregarConsumo&datetime="${datetime}"&amount=${amount}&unit="${unit}"&ingredient_id=${ingredient_id}`);
+        const response = fetch(`../API/api.php?action=agregarConsumo&datetime="${datetime}"&amount=${amount}&unit="${unit}"&ingredient_id=${ingredient_id}`);
         const data = response;
         console.log(data);
         alert("Consumo registrado exitosamente");
@@ -54,139 +54,164 @@ async function agregarConsumo(datetime, amount, unit, ingredient_id) {
     }
 }
 
-async function agregarConsumoIngrediente(cantidad_usada, id_ingrediente) {
+function agregarConsumoIngrediente(cantidad_usada, id_ingrediente) {
     try {
-        const response = await fetch(`../API/api.php?action=agregarConsumoIngrediente&cantidad_usada=${cantidad_usada}&id_ingrediente=${id_ingrediente}`);
+        const response = fetch(`../API/api.php?action=agregarConsumoIngrediente&cantidad_usada=${cantidad_usada}&id_ingrediente=${id_ingrediente}`);
         const data = response;
         console.log(data);
     } catch (error) {
         console.error('Error:', error);
-        alert("error");
         throw error;
     }
 }
 
-// TODO: Falta terminar por completo.
 async function conversionUnidades(lecturaActual, ingrediente, unidades1, unidades2) {
-    let resultado = 0;
+    
+    const conversion = {
+        "gramos": {
+            "gramos": 1,
+            "kilogramos": 1 / 1000,
+            "mililitros": 1 / ingrediente.density,
+            "litros": 1 / (1000 * ingrediente.density),
+            "libras": 1 / 453.592,
+            "onzas": 1 / 28.35,
+            "tazas": 1 / (ingrediente.density * 236.588),
+            "medias tazas": 1 / (ingrediente.density * 118.294),
+            "cucharadas": 1 / (ingrediente.density * 14.799),
+            "cucharaditas": 1 / (ingrediente.density * 4.9325),
+            "pizcas": 1 / 0.625
+        },
+        "kilogramos": {
+            "gramos": 1000,
+            "kilogramos": 1,
+            "mililitros": ingrediente.density * 1000,
+            "litros": ingrediente.density / 1000,
+            "libras": 2.20462,
+            "onzas": 35.274,
+            "tazas": (1000 / ingrediente.density) / 236.588,
+            "medias tazas": (1000 / ingrediente.density) / 118.294,
+            "cucharadas": (1000 / ingrediente.density) / 14.799,
+            "cucharaditas": (1000 / ingrediente.density) / 4.9325,
+            "pizcas": 1000 / 0.625
+        },
+        "mililitros": {
+            "gramos": ingrediente.density,
+            "kilogramos": 0.001 * ingrediente.density,
+            "mililitros": 1,
+            "litros": 1 / 1000,
+            "libras": ingrediente.density * 1 / 453.592,
+            "onzas": 1 / ingrediente.density * 1 / 28.3495,
+            "tazas": 1 / 236.588,
+            "medias tazas": 1 / 118.294,
+            "cucharadas": 1 / 14.799,
+            "cucharaditas": 1 / 4.9325
+        },
+        "litros": {
+            "gramos": 1000 * ingrediente.density,
+            "kilogramos": ingrediente.density / 1000,
+            "mililitros": 1000,
+            "litros": 1,
+            "libras": (ingrediente.density / 1000) * 1 / 0.453592,
+            "onzas": (ingrediente.density / 1000) * (1 / 28.3495),
+            "tazas": 4.22675,
+            "medias tazas": 2.1133,
+            "cucharadas": 67.628,
+            "cucharaditas": 202.884
+        },
+        "libras": {
+            "gramos": 453.592,
+            "kilogramos": 0.453592,
+            "mililitros": 453.592 / ingrediente.density,
+            "litros": (453.592 / ingrediente.density) / 1000,
+            "libras": 1,
+            "onzas": 16,
+            "tazas": (453.592 / ingrediente.density) / 236.588,
+            "medias tazas": (453.592 / ingrediente.density) / 118.294,
+            "cucharadas": (453.592 / ingrediente.density) / 14.799,
+            "cucharaditas": (453.592 / ingrediente.density) / 4.9325,
+            "pizcas": 1 / 0.001375
+        },
+        "onzas": {
+            "gramos": 28.3495,
+            "kilogramos": 1 / 35.27396,
+            "mililitros": 28.3495 / ingrediente.density,
+            "litros": 28.3495 / (ingrediente.density * 1000),
+            "libras": 1 / 16,
+            "onzas": 1,
+            "tazas": 28.3495 / (ingrediente.density * 236.588),
+            "medias tazas": 128.3495 / (ingrediente.density * 118.294),
+            "cucharadas": 28.3495 / (ingrediente.density * 14.799),
+            "cucharaditas": 28.3495 / (ingrediente.density * 4.9325),
+            "pizcas": 1 / 0.019685
+        },
+        "tazas": {
+            "gramos": ingrediente.density * 236.588,
+            "kilogramos": (ingrediente.density * 236.588) / 1000,
+            "mililitros": 236.588,
+            "litros": 0.236588,
+            "unidades": 1,
+            "libras": (236.588 * ingrediente.density) / 453.592,
+            "onzas": (236.588 * ingrediente.density) / 28.3495,
+            "tazas": 1,
+            "medias tazas": 0.5,
+            "cucharadas": (236.588 * ingrediente.density) / 14.799,
+            "cucharaditas": (236.588 * ingrediente.density) / 4.9325
+        },
+        "medias tazas": {
+            "gramos": ingrediente.density * 118.294,
+            "kilogramos": (ingrediente.density * 118.294) / 1000,
+            "mililitros": 118.294,
+            "litros": 0.118294,
+            "unidades": 1,
+            "libras": (118.294 * ingrediente.density) / 453.592,
+            "onzas": (118.294 * ingrediente.density) / 28.3495,
+            "tazas": 2,
+            "medias tazas": 1,
+            "cucharadas": (118.294 * ingrediente.density) / 14.799,
+            "cucharaditas": (118.294 * ingrediente.density) / 4.9325
+        },
+        "cucharadas": {
+            "gramos": ingrediente.density * 14.799,
+            "kilogramos": (ingrediente.density * 14.799) / 1000,
+            "mililitros": 14.799,
+            "litros": 0.014799,
+            "unidades": 1,
+            "libras": (14.799 * ingrediente.density) / 453.592,
+            "onzas": (14.799 * ingrediente.density) / 28.3495,
+            "tazas": 14.799 / 236.588,
+            "medias tazas":14.799 / 118.294,
+            "cucharadas": 1,
+            "cucharaditas": 14.799 / 4.9325
+        },
+        "cucharaditas": {
+            "gramos":  ingrediente.density * 4.9325,
+            "kilogramos": (ingrediente.density * 4.9325) / 1000,
+            "mililitros": 4.9325,
+            "litros": 0.0049325,
+            "libras": (4.9325 * ingrediente.density) / 453.592,
+            "onzas": (4.9325 * ingrediente.density) / 28.3495,
+            "tazas": 4.9325 / 236.588,
+            "medias tazas": 4.9325 / 118.294,
+            "cucharadas": 4.9325 / 14.799,
+            "cucharaditas": 1
+        },
+        "pizcas": {
+            "gramos": 0.625,
+            "libras": 0.001375,
+            "onzas": 0.019685
+        }
+    };
 
-    switch (unidades1) {
-        case "gramos":
-            switch (unidades2) {
-                case "gramos":
-                    resultado = lecturaActual;   
-                    break;
-                case "kilogramos":
-                    resultado = lecturaActual / 1000;    
-                    break;
-                case "mililitros":
-                    resultado = lecturaActual / ingrediente;['density'];        
-                    break;
-                case "litros":
-                    resultado = lecturaActual / (1000 * ingrediente['density']);            
-                    break;
-                case "unidades":
-                    resultado = lecturaActual;       
-                    break;
-                case "libras":
-                    resultado = lecturaActual / 453.592;
-                    break;
-                case "onzas":
-                    resultado = lecturaActual / 28.35;      
-                    break;
-                case "tazas":
-                    resultado = lecturaActual / (ingrediente["density"] * 240);          
-                    break;
-                case "medias tazas":
-                    resultado = lecturaActual / (ingrediente["density"] * 120);         
-                    break;
-                case "cucharadas": 
-                    resultado = lecturaActual / (ingrediente["density"] * 15);        
-                    break;
-                case "cucharaditas":
-                    resultado = lecturaActual / (ingrediente["density"] * 5);       
-                    break;
-                case "pizcas":
-                    resultado = lecturaActual / 0.18;     
-                    break;
-                default:
-                    break;
-            }    
-            break;
-        case "kilogramos":
-            if (unidades2 == "gramos") {
-                resultado = lecturaActual * 1000;
-            }
-            break;
-        case "mililitros":   
-            if (unidades2 == "gramos") {
-                resultado = lecturaActual * ingrediente["density"];
-            }
-            break;
-        case "litros":
-            if (unidades2 == "gramos") {
-                resultado = lecturaActual * (1000 * ingrediente["density"]);
-            }
-            break;
-        case "unidades":
-            break;
-        case "libras":
-            if (unidades2 == "gramos") {
-                resultado = lecturaActual * 453.592;
-            }
-            break;
-        case "onzas":
-            if (unidades2 == "gramos") {
-                resultado = lecturaActual * 28.35;
-            }
-            break;
-        case "tazas":
-            if (unidades2 == "gramos") {
-                resultado = lecturaActual * ingrediente["density"] * 240;
-            }
-            break;
-        case "medias tazas":
-            if (unidades2 == "gramos") {
-                resultado = lecturaActual * ingrediente["density"] * 120;
-            }
-            break;
-        case "cucharadas":
-            if (unidades2 == "gramos") {
-                resultado = lecturaActual * ingrediente["density"] * 15;
-            }
-            break;
-        case "cucharaditas":
-            if (unidades2 == "gramos") {
-                resultado = lecturaActual * ingrediente["density"] * 5;
-            }
-            break;
-        case "piscaz":
-            if (unidades2 == "gramos") {
-                resultado = lecturaActual * 0.18;
-            }
-            break;
-        default:
-            break;
-    }
-
-    return parseFloat(resultado).toFixed(3);
+    return parseFloat(lecturaActual * conversion[unidades1][unidades2]).toFixed(3);
 }
 
 function confirmarPeso() {
     // Obtener la fecha actual
-    var fechaActual = new Date();
-
-    // Obtener los componentes de la fecha
-    var año = fechaActual.getFullYear();
-    var mes = ('0' + (fechaActual.getMonth() + 1)).slice(-2); // Agregar 1 al mes ya que los meses se indexan desde 0
-    var dia = ('0' + fechaActual.getDate()).slice(-2);
-    var horas = ('0' + fechaActual.getHours()).slice(-2);
-    var minutos = ('0' + fechaActual.getMinutes()).slice(-2);
-    var segundos = ('0' + fechaActual.getSeconds()).slice(-2);
+    const fechaActual = new Date();
 
     // Formatear la fecha como DATETIME
-    var fechaFormateada = año + '-' + mes + '-' + dia + ' ' + horas + ':' + minutos + ':' + segundos;
-
+    const fechaFormateada = fechaActual.toISOString().slice(0, 19).replace('T', ' ');
+    
     agregarConsumo(fechaFormateada, resultadoGlobal, unidadIngredienteGlobal, ingredienteIDGlobal);
     agregarConsumoIngrediente(resultadoGlobalGramos, ingredienteIDGlobal);
 }
