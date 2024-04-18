@@ -43,12 +43,12 @@ $res = $recipe->obtenerRecetas();
 
             <section>
                 <h3 class="text-center">Lectura deseada:</h3>
-                <p class="text-center"> <span id="lectura_deseada">0</span> gramos</p>
+                <p class="text-center"> <span id="lectura_deseada">0</span> <span id="unidades-1"></span></p>
             </section>
 
             <section class="pt-4">
                 <h3 class="text-center">Lectura actual:</h3>
-                <p class="text-center"> <span id="dato_procesado">0</span> gramos</p>
+                <p class="text-center"> <span id="dato_procesado">0</span> <span id="unidades-2"></span></p>
             </section>
 
             <section class="pt-4">
