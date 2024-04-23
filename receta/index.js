@@ -99,6 +99,11 @@ async function main() {
                     }   
                 } else {
                     // Caso ingrediente en unidades
+                    botonConfirmar.disabled = false;
+                    botonConfirmar.classList.remove('bg-gray-500');
+                    botonConfirmar.classList.add('bg-blue-700');
+                    document.getElementById("accion_requerida").innerText = "Ninguna";
+                    
                     document.getElementById('lectura_deseada').innerText = pasosReceta[pasoActual]['amount'];
                     document.getElementById('dato_procesado').innerText = pasosReceta[pasoActual]['amount'];
                     unidades1.innerText = ingrediente['unit'];
