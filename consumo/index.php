@@ -25,7 +25,7 @@ while ($row = $res->fetch_assoc()) {
 }
 
 // Número de resultados por página
-$resultados_por_pagina = 6;
+$resultados_por_pagina = 8;
 
 // Número total de recetas
 $total_consumos = count($consumos_array);
