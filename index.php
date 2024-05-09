@@ -9,7 +9,7 @@
 <body class="h-full">
     <main class="h-full">
         <header class="w-full flex h-[200px] justify-center items-center bg-blue-700">
-            <h1 class="font-bold text-[50px] text-white" >PesoPluma - Menu</h1>
+            <h1 class="font-bold text-[50px] text-white" >PesoPluma - Menú</h1>
         </header>
 
         <div class="flex items-center flex-col justify-around h-[475px]">
