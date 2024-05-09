@@ -71,7 +71,7 @@ $ingredientes_pagina = array_slice($ingredientes_array, $indice_inicio, $resulta
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Ingrediente</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Cantidad</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Unidad</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Densidad</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Densidad (g/mL)</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Editar</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Eliminar</th>
                             <!-- Agrega más encabezados aquí si es necesario -->
@@ -136,20 +136,12 @@ $ingredientes_pagina = array_slice($ingredientes_array, $indice_inicio, $resulta
                     <select class="block border rounded mb-1 w-full" id="unidad-ingrediente" name="unidad-ingrediente" aria-label="Floating label select example">
                     <option value="none" selected disabled>Selecciona una opción</option>
                     <option value="gramos">Gramos</option>
-                    <option value="kilogramos">Kilogramos</option>
                     <option value="mililitros">Mililitros</option>
-                    <option value="litros">Litros</option>
                     <option value="unidades">Unidades</option>
-                    <option value="libras">Libras</option>
-                    <option value="onzas">Onzas</option>
-                    <option value="tazas">Tazas</option>
-                    <option value="medias tazas">Medias Tazas</option>
-                    <option value="cucharadas">Cucharadas</option>
-                    <option value="pizcas">Pizcas</option>
                     </select>
 
                     <h3 class="text-lg border-b text-blue-700 border-blue-700 mb-3 font-bold w-full mt-1">
-                        Densidad:
+                        Densidad (g/mL):
                     </h3>
                     <input type="number" name="densidad-ingrediente" id="densidad-ingrediente" class="border rounded w-full px-1" step="any" value="0">
 

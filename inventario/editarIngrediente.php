@@ -68,20 +68,12 @@ include_once '../API/db.php';
                     <select class="block border rounded mb-1 w-full" id="unidad-ingrediente" name="unidad-ingrediente" aria-label="Floating label select example">
                     <option selected><?php echo $r["ingredient_unit"];?></option>
                     <option value="gramos">Gramos</option>
-                    <option value="kilogramos">Kilogramos</option>
                     <option value="mililitros">Mililitros</option>
-                    <option value="litros">Litros</option>
                     <option value="unidades">Unidades</option>
-                    <option value="libras">Libras</option>
-                    <option value="onzas">Onzas</option>
-                    <option value="tazas">Tazas</option>
-                    <option value="medias tazas">Medias Tazas</option>
-                    <option value="cucharadas">Cucharadas</option>
-                    <option value="pizcas">Pizcas</option>
                     </select>
 
                     <h3 class="text-lg border-b text-blue-700 border-blue-700 mb-3 font-bold w-full mt-1">
-                        Densidad:
+                        Densidad (g/mL):
                     </h3>
                     <input type="number" name="densidad-ingrediente" id="densidad-ingrediente" class="border rounded w-full px-1" step="any" value="<?php echo $r["ingredient_density"];?>">
 
