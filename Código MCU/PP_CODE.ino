@@ -10,9 +10,9 @@ const int encendido=36;
 // Crear el objeto balanza
 HX711 balanza;
 
-String URL = "http://192.168.91.234/gramera-inteligente/API/recibirLectura.php";
+String URL = "http://192.168.182.234/gramera-inteligente/API/recibirLectura.php";
 
-const char* ssid = "Redmi"; 
+const char* ssid = "DIRECT-TF-PesoPluma"; 
 const char* password = "prueba2024"; 
 
 int dato = 1; 
@@ -48,7 +48,7 @@ void loop() {
   } else {
     if (digitalRead(encendido)==1) {
       peso = balanza.get_units(10);
-      pesoFinal = (peso/(21.34));
+      pesoFinal = (peso / 14);
       Serial.print("Peso: ");
       Serial.println(pesoFinal);
       delay(1000);
